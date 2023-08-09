@@ -23,5 +23,6 @@ module.exports = {
     'no-console': 'off',
     'no-unused-vars': 'warn',
     'import/extensions': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 };
