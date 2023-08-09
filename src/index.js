@@ -5,9 +5,10 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+// import mongoose from 'mongoose';
 import userRouter from './routes/users.js';
 import indexRouter from './routes/index.js';
-import { client, testDB } from './config/database.js';
+import { mongoDB, testDB } from './config/database.js';
 
 dotenv.config();
 
@@ -21,6 +22,23 @@ const port = process.env.PORT || 3000;
     console.error('Error connecting to MongoDB:', error);
   }
 })();
+
+(async () => {
+  try {
+    await mongoDB.collection('customer').insertOne({
+      name: 'yo Doe',
+    });
+    console.log(
+      'Inserted a document into the learning-db.customer collection.'
+    );
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
+})();
+
+// console.log(
+//   'hello: ' + (await mongoDB.collection('customer').find({}).toArray())
+// );
 
 nunjucks.configure('src/views', {
   autoescape: true,

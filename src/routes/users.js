@@ -6,7 +6,7 @@ userRouter.get('/', (req, res) => {
   res.render('users', { title: 'Hey users', message: 'Hello users!' });
 });
 
-userRouter.post('/:id', (req, res) => {
+userRouter.get('/:id', (req, res) => {
   const userId = req.params.id;
   res.render('users', { title: 'Hey users', message: `Hello user ${userId}!` });
 });
