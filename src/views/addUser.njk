@@ -1,0 +1,14 @@
+{% extends "base.njk" %}
+
+{% block title %}This is the addUser page{% endblock %}
+
+{% block content%}
+  <form action="/addUser" method="POST">
+    <label for="name">add data, name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="age">age:</label>
+    <input type="text" id="age" name="age" required>
+    <button type="submit">Submit</button>
+  </form>
+    {{message}}
+{% endblock %}

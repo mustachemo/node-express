@@ -1,11 +1,12 @@
 {% extends "base.njk" %}
 
+{% block title %}Users{% endblock %}
+
 {% block content%}
-  <form action="/users" method="POST">
-    <label for="name">Enter Your Name:</label>
+  <form action="/getUsers" method="POST">
+    <label for="name">Find by name:</label>
     <input type="text" id="name" name="name" required>
     <button type="submit">Submit</button>
   </form>
-    {{ title}}
     {{message}}
 {% endblock %}

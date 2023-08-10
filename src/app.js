@@ -1,14 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import express from 'express';
 import nunjucks from 'nunjucks';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
-// import mongoose from 'mongoose';
-import userRouter from './routes/users.js';
 import indexRouter from './routes/index.js';
-import { listDatabases, mongoDB, testDB } from './config/database.js';
+import getUserRouter from './routes/getUsers.js';
+import addUserRouter from './routes/addUser.js';
+import { listDatabases, testDB } from './config/database.js';
+// import { get } from 'browser-sync';
 
 dotenv.config();
 
@@ -17,19 +17,11 @@ const port = process.env.PORT || 3000;
 
 (async () => {
   try {
-    await testDB(); // Connect to MongoDB using the exported run function
+    await testDB();
     await listDatabases();
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-})();
-
-(async () => {
-  try {
-    const sophia = await mongoDB
-      .collection('customer')
-      .findOne({ name: 'john' });
-    console.log(sophia);
+    app.listen(port, () => {
+      console.log(`listening on port ${port}!`);
+    });
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
   }
@@ -50,8 +42,5 @@ app.use(logger('dev'));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
-
-app.listen(port, () => {
-  console.log(`listening on port ${port}!`);
-});
+app.use('/getUsers', getUserRouter);
+app.use('/addUser', addUserRouter);
