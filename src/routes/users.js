@@ -3,12 +3,31 @@ import { mongoDB } from '../config/database.js';
 
 const userRouter = express.Router();
 
-userRouter.route('/').get((req, res) => {
-  res.render('users', {
-    title: 'Hey users',
-    message: 'Hello users!',
+userRouter
+  .route('/')
+  .get((req, res) => {
+    res.render('users', {
+      title: 'User Form',
+      message: 'Please enter your name:',
+    });
+  })
+  .post(async (req, res) => {
+    try {
+      const submittedName = await mongoDB
+        .collection('customer')
+        .findOne({ name: req.body.name });
+
+      // You can save the submitted name to the database or use it directly
+      // For now, we'll just display it on the page
+      res.render('users', {
+        title: 'User Form',
+        message: `Hello, ${submittedName.name}!`,
+      });
+    } catch (error) {
+      console.error('Error handling form submission:', error);
+      res.status(500).send(`Error: could not get user ${req.body.name}`);
+    }
   });
-});
 
 userRouter
   .route('/:name')
