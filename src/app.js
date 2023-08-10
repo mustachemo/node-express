@@ -8,7 +8,7 @@ import cors from 'cors';
 // import mongoose from 'mongoose';
 import userRouter from './routes/users.js';
 import indexRouter from './routes/index.js';
-import { mongoDB, testDB } from './config/database.js';
+import { listDatabases, mongoDB, testDB } from './config/database.js';
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ const port = process.env.PORT || 3000;
 (async () => {
   try {
     await testDB(); // Connect to MongoDB using the exported run function
+    await listDatabases();
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
   }
@@ -39,6 +40,7 @@ nunjucks.configure('src/views', {
   express: app,
 });
 app.set('view engine', 'njk');
+app.set('env', process.env.NODE_ENV);
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false }));

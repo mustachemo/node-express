@@ -24,7 +24,6 @@ userRouter
         message: `Hello, ${submittedName.name}!`,
       });
     } catch (error) {
-      console.error('Error handling form submission:', error);
       res.status(500).send(`Error: could not get user ${req.body.name}`);
     }
   });

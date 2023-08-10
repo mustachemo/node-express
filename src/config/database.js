@@ -15,13 +15,33 @@ const client = new MongoClient(uri, {
 });
 
 async function testDB() {
-  // Connect the client to the server	(optional starting in v4.7)
-  await client.connect();
-  // Send a ping to confirm a successful connection
-  await client.db('admin').command({ ping: 1 });
-  console.log('Pinged your deployment. You successfully connected to MongoDB!');
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db('admin').command({ ping: 1 });
+    console.log(
+      'Pinged your deployment. You successfully connected to MongoDB!'
+    );
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
+}
+
+async function listDatabases() {
+  try {
+    await client.connect();
+    const adminDb = client.db('admin');
+    const databaseList = await adminDb.admin().listDatabases();
+    console.log('Available databases:');
+    databaseList.databases.forEach(db => {
+      console.log(`- ${db.name}`);
+    });
+  } catch (error) {
+    console.error('Error listing databases:', error);
+  }
 }
 
 const mongoDB = client.db('learning-db');
 
-export { mongoDB, testDB };
+export { mongoDB, testDB, listDatabases };
