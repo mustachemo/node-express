@@ -1,14 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import express from 'express';
 import nunjucks from 'nunjucks';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
-// import mongoose from 'mongoose';
-import userRouter from './routes/users.js';
 import indexRouter from './routes/index.js';
+import getUserRouter from './routes/getUsers.js';
+import addUserRouter from './routes/addUser.js';
 import { listDatabases, testDB } from './config/database.js';
+// import { get } from 'browser-sync';
 
 dotenv.config();
 
@@ -42,4 +42,5 @@ app.use(logger('dev'));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
+app.use('/getUsers', getUserRouter);
+app.use('/addUser', addUserRouter);

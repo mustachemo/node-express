@@ -13,12 +13,11 @@ const customerSchema = new mongoose.Schema(
     },
     age: {
       type: Number,
-      min: 18,
       max: 120,
     },
     cute: Boolean,
   },
-  { timestamps: true, collection: 'customers' }
+  { timestamps: true, collection: 'customers', versionKey: false }
 );
 
 const Customer = mongoose.model('customers', customerSchema);
