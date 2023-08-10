@@ -1,5 +1,5 @@
 import express from 'express';
-import { mongoDB } from '../config/database.js';
+import Customer from '../models/customers.js';
 
 const userRouter = express.Router();
 
@@ -13,12 +13,7 @@ userRouter
   })
   .post(async (req, res) => {
     try {
-      const submittedName = await mongoDB
-        .collection('customer')
-        .findOne({ name: req.body.name });
-
-      // You can save the submitted name to the database or use it directly
-      // For now, we'll just display it on the page
+      const submittedName = await Customer(req.body.name);
       res.render('users', {
         title: 'User Form',
         message: `Hello, ${submittedName.name}!`,

@@ -1,11 +1,23 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const uri = process.env.MONGODB_URI;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const testDB = async () => {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true, // This will help to avoid DeprecationWarning: current Server Discovery and Monitoring engine is deprecated
+      useUnifiedTopology: true, // This will help to avoid DeprecationWarning: current Server Discovery and Monitoring engine is deprecated
+    });
+    console.log('Successfuly connected to MongoDB');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
+};
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -14,21 +26,7 @@ const client = new MongoClient(uri, {
   },
 });
 
-async function testDB() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db('admin').command({ ping: 1 });
-    console.log(
-      'Pinged your deployment. You successfully connected to MongoDB!'
-    );
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-}
-
-async function listDatabases() {
+const listDatabases = async () => {
   try {
     await client.connect();
     const adminDb = client.db('admin');
@@ -40,8 +38,6 @@ async function listDatabases() {
   } catch (error) {
     console.error('Error listing databases:', error);
   }
-}
+};
 
-const mongoDB = client.db('learning-db');
-
-export { mongoDB, testDB, listDatabases };
+export { testDB, listDatabases };
