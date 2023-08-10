@@ -34,23 +34,6 @@ const port = process.env.PORT || 3000;
   }
 })();
 
-// (async () => {
-//   try {
-//     await mongoDB.collection('customer').insertOne({
-//       name: 'yo Doe',
-//     });
-//     console.log(
-//       'Inserted a document into the learning-db.customer collection.'
-//     );
-//   } catch (error) {
-//     console.error('Error connecting to MongoDB:', error);
-//   }
-// })();
-
-// console.log(
-//   'hello: ' + (await mongoDB.collection('customer').find({}).toArray())
-// );
-
 nunjucks.configure('src/views', {
   autoescape: true,
   express: app,
