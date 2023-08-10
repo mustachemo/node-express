@@ -51,5 +51,4 @@ userRouter
       message: `Hello user ${userId}!`,
     });
   });
-
 export default userRouter;
